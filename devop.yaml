@@ -1,17 +1,20 @@
-app_name: MyWebApp
-version: 1.0.0
+trigger:
+- main
 
-server:
-  host: localhost
-  port: 8080
+pool:
+  vmImage: 'ubuntu-latest'
 
-database:
-  type: postgres
-  host: db.example.com
-  port: 5432
-  username: user
-  password: pass
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
 
-logging:
-  level: info
-  format: json
+- script: |
+    echo "Installing dependencies..."
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+- script: |
+    echo "Running your app or script..."
+    python your_script.py
+  displayName: 'Run application'
